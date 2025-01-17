@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 public class Pistol : MonoBehaviour
@@ -12,7 +11,10 @@ public class Pistol : MonoBehaviour
     private Transform _posThis;
     private Transform transformNewBul;
     private SpriteRenderer _spriteRenderer;
-    private int countBul; // счетчик созданных пуль
+    private float timer = 0f;
+    private float maxTimer = 2f;
+
+    private bool _flagForCreateNewBullet;
 
     private void Awake()
     {
@@ -22,26 +24,43 @@ public class Pistol : MonoBehaviour
 
     private void Start()
     {
-        countBul = 0;
         GameInput.Instance.OnClickMouse += CreateBullet_OnClickMouse;
-
+        _flagForCreateNewBullet = true;
     }
 
     private void Update()
     {
         if (newBullet != null)
             MoveBullet();
+
+        if (_flagForCreateNewBullet == false)
+        {
+            CheckForCreation();
+        }
+    }
+
+    private void CheckForCreation()
+    {
+
+        timer += Time.deltaTime;
+        if (timer >= maxTimer)
+        {
+            _flagForCreateNewBullet = true;
+            timer = 0f;
+        }
+
     }
 
     private void CreateBullet_OnClickMouse(object sender, System.EventArgs e)
     {
-        StartCoroutine(CreateBullet(2f));
+        if (_spriteRenderer.enabled != false && _flagForCreateNewBullet == true)
+            CreateBullet();
     }
 
     private void MoveBullet()
     {
         _timerMoveBullet += Time.deltaTime;
-        if (_timerMoveBullet > _timerMaxMoveBullet || _spriteRenderer.enabled == false)
+        if (_timerMoveBullet > _timerMaxMoveBullet)
         {
             DestroyBullet();
             _timerMoveBullet = 0f;
@@ -51,17 +70,17 @@ public class Pistol : MonoBehaviour
 
     public void DestroyBullet()
     {
-        Destroy(newBullet);
+        if (newBullet != null)
+            Destroy(newBullet);
     }
 
-    private IEnumerator CreateBullet(float wait)
+    private void CreateBullet()
     {
-        if(newBullet == null)
+        if (newBullet == null)
         {
+            _flagForCreateNewBullet = false;
             newBullet = Instantiate(_bullet, _posThis.position, _posThis.rotation) as GameObject; // создание пули в направлении поворота пистолета и в его позиции
             transformNewBul = newBullet.GetComponent<Transform>(); // получаем трансформ только что созданной пули
-            countBul++;
         }
-        yield return new WaitForSeconds(wait);
     }
 }

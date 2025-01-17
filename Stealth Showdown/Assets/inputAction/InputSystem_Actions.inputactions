@@ -13,6 +13,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "NextSwitchItems",
+                    "type": "Button",
+                    "id": "78e85ca2-2863-41a3-8bcc-4d6a1ed8bd85",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrevSwitchItems",
+                    "type": "Button",
+                    "id": "84b5501c-065f-43e6-9dbd-a66732889705",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -70,6 +88,28 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "69f50a10-597b-41ed-b089-db346f43f18d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextSwitchItems",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9be13b70-cd9c-4f28-86d7-09bbb9b459fc",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrevSwitchItems",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -96,56 +136,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "BtnMouse",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "SwitchBtn",
-            "id": "1139547c-5148-4595-a61e-9e1e7ea85ddb",
-            "actions": [
-                {
-                    "name": "BtnSwitchItem",
-                    "type": "Value",
-                    "id": "4f4e85a7-da98-4955-9700-057512f0c681",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "5ffe47c7-75f7-4984-a9e9-b4046372a3a3",
-                    "path": "<Keyboard>/1",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BtnSwitchItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "86d4e4e5-c8fc-4620-a7db-8d21cf56ee32",
-                    "path": "<Keyboard>/2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BtnSwitchItem",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ea786c6e-ddb8-477f-a085-58d33dfab551",
-                    "path": "<Keyboard>/3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "BtnSwitchItem",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

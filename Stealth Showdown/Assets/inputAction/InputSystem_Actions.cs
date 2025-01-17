@@ -35,6 +35,24 @@ public partial class @PlayerinputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""NextSwitchItems"",
+                    ""type"": ""Button"",
+                    ""id"": ""78e85ca2-2863-41a3-8bcc-4d6a1ed8bd85"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrevSwitchItems"",
+                    ""type"": ""Button"",
+                    ""id"": ""84b5501c-065f-43e6-9dbd-a66732889705"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +110,28 @@ public partial class @PlayerinputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69f50a10-597b-41ed-b089-db346f43f18d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextSwitchItems"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9be13b70-cd9c-4f28-86d7-09bbb9b459fc"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrevSwitchItems"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -118,56 +158,6 @@ public partial class @PlayerinputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""BtnMouse"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""SwitchBtn"",
-            ""id"": ""1139547c-5148-4595-a61e-9e1e7ea85ddb"",
-            ""actions"": [
-                {
-                    ""name"": ""BtnSwitchItem"",
-                    ""type"": ""Value"",
-                    ""id"": ""4f4e85a7-da98-4955-9700-057512f0c681"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""5ffe47c7-75f7-4984-a9e9-b4046372a3a3"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BtnSwitchItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""86d4e4e5-c8fc-4620-a7db-8d21cf56ee32"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BtnSwitchItem"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ea786c6e-ddb8-477f-a085-58d33dfab551"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BtnSwitchItem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -240,19 +230,17 @@ public partial class @PlayerinputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_NextSwitchItems = m_Player.FindAction("NextSwitchItems", throwIfNotFound: true);
+        m_Player_PrevSwitchItems = m_Player.FindAction("PrevSwitchItems", throwIfNotFound: true);
         // ActionsBtn
         m_ActionsBtn = asset.FindActionMap("ActionsBtn", throwIfNotFound: true);
         m_ActionsBtn_BtnMouse = m_ActionsBtn.FindAction("BtnMouse", throwIfNotFound: true);
-        // SwitchBtn
-        m_SwitchBtn = asset.FindActionMap("SwitchBtn", throwIfNotFound: true);
-        m_SwitchBtn_BtnSwitchItem = m_SwitchBtn.FindAction("BtnSwitchItem", throwIfNotFound: true);
     }
 
     ~@PlayerinputActions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerinputActions.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_ActionsBtn.enabled, "This will cause a leak and performance issues, PlayerinputActions.ActionsBtn.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_SwitchBtn.enabled, "This will cause a leak and performance issues, PlayerinputActions.SwitchBtn.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -315,11 +303,15 @@ public partial class @PlayerinputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_NextSwitchItems;
+    private readonly InputAction m_Player_PrevSwitchItems;
     public struct PlayerActions
     {
         private @PlayerinputActions m_Wrapper;
         public PlayerActions(@PlayerinputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @NextSwitchItems => m_Wrapper.m_Player_NextSwitchItems;
+        public InputAction @PrevSwitchItems => m_Wrapper.m_Player_PrevSwitchItems;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -332,6 +324,12 @@ public partial class @PlayerinputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @NextSwitchItems.started += instance.OnNextSwitchItems;
+            @NextSwitchItems.performed += instance.OnNextSwitchItems;
+            @NextSwitchItems.canceled += instance.OnNextSwitchItems;
+            @PrevSwitchItems.started += instance.OnPrevSwitchItems;
+            @PrevSwitchItems.performed += instance.OnPrevSwitchItems;
+            @PrevSwitchItems.canceled += instance.OnPrevSwitchItems;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -339,6 +337,12 @@ public partial class @PlayerinputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @NextSwitchItems.started -= instance.OnNextSwitchItems;
+            @NextSwitchItems.performed -= instance.OnNextSwitchItems;
+            @NextSwitchItems.canceled -= instance.OnNextSwitchItems;
+            @PrevSwitchItems.started -= instance.OnPrevSwitchItems;
+            @PrevSwitchItems.performed -= instance.OnPrevSwitchItems;
+            @PrevSwitchItems.canceled -= instance.OnPrevSwitchItems;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -402,52 +406,6 @@ public partial class @PlayerinputActions: IInputActionCollection2, IDisposable
         }
     }
     public ActionsBtnActions @ActionsBtn => new ActionsBtnActions(this);
-
-    // SwitchBtn
-    private readonly InputActionMap m_SwitchBtn;
-    private List<ISwitchBtnActions> m_SwitchBtnActionsCallbackInterfaces = new List<ISwitchBtnActions>();
-    private readonly InputAction m_SwitchBtn_BtnSwitchItem;
-    public struct SwitchBtnActions
-    {
-        private @PlayerinputActions m_Wrapper;
-        public SwitchBtnActions(@PlayerinputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @BtnSwitchItem => m_Wrapper.m_SwitchBtn_BtnSwitchItem;
-        public InputActionMap Get() { return m_Wrapper.m_SwitchBtn; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(SwitchBtnActions set) { return set.Get(); }
-        public void AddCallbacks(ISwitchBtnActions instance)
-        {
-            if (instance == null || m_Wrapper.m_SwitchBtnActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_SwitchBtnActionsCallbackInterfaces.Add(instance);
-            @BtnSwitchItem.started += instance.OnBtnSwitchItem;
-            @BtnSwitchItem.performed += instance.OnBtnSwitchItem;
-            @BtnSwitchItem.canceled += instance.OnBtnSwitchItem;
-        }
-
-        private void UnregisterCallbacks(ISwitchBtnActions instance)
-        {
-            @BtnSwitchItem.started -= instance.OnBtnSwitchItem;
-            @BtnSwitchItem.performed -= instance.OnBtnSwitchItem;
-            @BtnSwitchItem.canceled -= instance.OnBtnSwitchItem;
-        }
-
-        public void RemoveCallbacks(ISwitchBtnActions instance)
-        {
-            if (m_Wrapper.m_SwitchBtnActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(ISwitchBtnActions instance)
-        {
-            foreach (var item in m_Wrapper.m_SwitchBtnActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_SwitchBtnActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public SwitchBtnActions @SwitchBtn => new SwitchBtnActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -496,13 +454,11 @@ public partial class @PlayerinputActions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnNextSwitchItems(InputAction.CallbackContext context);
+        void OnPrevSwitchItems(InputAction.CallbackContext context);
     }
     public interface IActionsBtnActions
     {
         void OnBtnMouse(InputAction.CallbackContext context);
-    }
-    public interface ISwitchBtnActions
-    {
-        void OnBtnSwitchItem(InputAction.CallbackContext context);
     }
 }

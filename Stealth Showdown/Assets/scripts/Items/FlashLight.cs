@@ -22,7 +22,13 @@ public class FlashLight : MonoBehaviour
 
     private void Update()
     {
-        if (_spriteRenderer.enabled == false) {
+        CheckEnabledSprateRenderer();
+    }
+
+    private void CheckEnabledSprateRenderer()
+    {
+        if (_spriteRenderer.enabled == false)
+        {
             _polygonCollider.enabled = false;
             _light2d.enabled = false;
         }

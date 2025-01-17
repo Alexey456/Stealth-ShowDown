@@ -14,14 +14,44 @@ public class ActiveItem : MonoBehaviour
     private void Start()
     {
         Instance = this;
+        GameInput.Instance.OnNextSwitchItemsBtn += OnNextSwitchItems;
+        GameInput.Instance.OnPrevSwitchItemsBtn += OnPrevSwitchItems;
         _activeItems.Find(x => x.CompareTag("FlashLight")).GetComponent<SpriteRenderer>().enabled = true;// находим объект в list по тегу и включаем спрайт
-        _activeItems.Find(x => x.CompareTag("Pistol")).GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    private int SwitchItemsGeneral()
+    {
+        int index = 0;
+        for (int i = 0; i < _activeItems.Count; i++)
+        {
+            if (_activeItems[i].GetComponent<SpriteRenderer>().enabled == true)
+            {
+                _activeItems[i].GetComponent<SpriteRenderer>().enabled = false;
+                index = i;
+            }
+            else
+            {
+                continue;
+            }
+        }
+        return index;
+    }
+
+    private void OnNextSwitchItems(object sender, System.EventArgs e)
+    {
+        int index = SwitchItemsGeneral();
+         _activeItems[(index + 1) % _activeItems.Count].GetComponent<SpriteRenderer>().enabled = true; // (index + 1) % _activeItems.Count если элемент окажется последним в списке то мы перейдем к первому
+    }
+
+    private void OnPrevSwitchItems(object sender, System.EventArgs e)
+    {
+        int index = SwitchItemsGeneral();
+        _activeItems[(index + _activeItems.Count - 1) % _activeItems.Count].GetComponent<SpriteRenderer>().enabled = true;
     }
 
     private void Update()
     {
         FollowMouse();
-        SwitchItem();
     }
     private void FollowMouse() // реализовать этот метод в GameInput
     {
@@ -36,21 +66,5 @@ public class ActiveItem : MonoBehaviour
     {
         float RotateZ = Mathf.Atan2(MousePos.y, MousePos.x) * Mathf.Rad2Deg; // Atan2 определяет угол( в радианах ), принимает две точки | Rad2Deg конвертирует радипны в градусы
         return RotateZ;
-    }
-
-    private void SwitchItem()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            _activeItems.Find(x => x.CompareTag("FlashLight")).GetComponent<SpriteRenderer>().enabled = true;
-            _activeItems.Find(x => x.CompareTag("Pistol")).GetComponent<SpriteRenderer>().enabled = false;
-            
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            _activeItems.Find(x => x.CompareTag("FlashLight")).GetComponent<SpriteRenderer>().enabled = false;
-            _activeItems.Find(x => x.CompareTag("Pistol")).GetComponent<SpriteRenderer>().enabled = true;
-           
-        }
     }
 }
